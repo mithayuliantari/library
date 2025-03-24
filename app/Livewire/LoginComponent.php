@@ -28,13 +28,12 @@ class LoginComponent extends Component
             'password.min' => 'Password minimal 6 karakter!'
         ]);
 
-        // Cek apakah user sudah ada di database
         $user = User::where('email', $this->email)->first();
 
         if (!$user) {
-            // Jika user tidak ditemukan, buat akun baru
+
             $user = User::create([
-                'nama' => 'User Baru', // Bisa diganti dengan input nama
+                'nama' => 'User Baru',
                 'alamat' => '-',
                 'telepon' => '-',
                 'email' => $this->email,
@@ -43,7 +42,7 @@ class LoginComponent extends Component
             ]);
         }
 
-        // Lakukan autentikasi
+        
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
             session()->regenerate();
             return redirect()->route('home');
